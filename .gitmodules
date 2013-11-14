@@ -1,0 +1,9 @@
+[submodule "vsD_vsgrep"]
+	path = vsD_vsgrep
+	url = git@github.com:verbalsaintmars/vsD_vsgrep.git
+[submodule "vsD_vsping"]
+	path = vsD_vsping
+	url = git@github.com:verbalsaintmars/vsD_vsping.git
+[submodule "vsD_vsiogen"]
+	path = vsD_vsiogen
+	url = git@github.com:verbalsaintmars/vsD_vsiogen.git
