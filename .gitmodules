@@ -7,3 +7,6 @@
 [submodule "vsD_vsiogen"]
 	path = vsD_vsiogen
 	url = git@github.com:verbalsaintmars/vsD_vsiogen.git
+[submodule "vsprobe"]
+	path = vsprobe
+	url = git@github.com:verbalsaintmars/vsprobe.git
