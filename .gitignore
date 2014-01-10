@@ -1,5 +1,5 @@
-.out
-.gch
-.swp
+*.out
+*.gch
+*.swp
 .directory
-.bak
+*.bak
