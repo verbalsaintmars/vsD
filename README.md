@@ -1,26 +1,46 @@
-vsD
-===
+# vsD
 
-TODO List
-=========
-P0:
-1. cmake files
-2. Hopscotch hashing library (for nodes lookup)
-3. Dynamic Load Library Module : dynamic library loading mechenism
-4. thread library
+Light weight reliable daemon acts as nodes handling dynamic loading modules
+to do it's jobs.
 
-P1:
-1. IPC component :
+## Main Purpose
+
+* React smart with client command.
+* No Figure Head. Figure head is dynamically ranked by algorithm
+* Auto-deploy , load balancing
+
+## Language , tools vsD uses
+
+* C++11/1y
+* boost mpl graph regex (appeneding)
+* g++ 4.9
+* cmake
+* ninja
+* zeroMQ
+* protocol buffer
+* gflag
+* glog
+
+# TODO List
+
+## P0:
+- cmake files
+- Dynamic Load Library Module : dynamic library loading mechenism
+- Hopscotch hashing library (for nodes lookup)
+- thread library
+
+## P1:
+- IPC component :
       zeroMQ
       protocol buffer
-2. nodes interaction
+- nodes interaction
 
-P2:
-1. Ranking component :
+## P2:
+- Ranking component :
    Host Information component
    Algorithm of ranking
 
-P3:
-1. https://code.google.com/p/google-glog/ integration
-2. https://code.google.com/p/gflags/ integration
+##P3:
+- https://code.google.com/p/google-glog/ integration
+- https://code.google.com/p/gflags/ integration
 
