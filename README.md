@@ -22,14 +22,14 @@ to do it's jobs.
 * glog
 
 # Build
--  Create a directory for build result.
+1. Create a directory for build result.
    
    e.g:
 ```bash
 mkdir /tmp/build
 ```
 
--  go into the directory and cmake the src out of it
+2. go into the directory and cmake the src out of it
    
    e.g:
 ```bash
@@ -37,36 +37,38 @@ cd /tmp/build
 cmake -G Ninja /path/to/the/vsD/source
 ```
 
--  vsD uses Ninja for building process, make sure your Ninja has been installed.
+3. vsD uses Ninja for building process, make sure your Ninja has been installed.
 
    execute ninja under /tmp/build
 ```bash
 ninja
 ```
 
--  the main vsD binary executble is under /tmp/build/bin
-   the test binary executables is under /tmp/build/test_bin
+4. the main vsD binary executble is under
+   **/tmp/build/bin**
+   the test binary executables is under
+   **/tmp/build/test_bin**
 
 # TODO List
 
 ## P0:
-- [x] cmake files
--  Dynamic Load Library Module : dynamic library loading mechenism
--  Hopscotch hashing library (for nodes lookup)
--  thread library
+1. [x] cmake files
+2. Dynamic Load Library Module : dynamic library loading mechenism
+3. Hopscotch hashing library (for nodes lookup)
+4. thread library
 
 ## P1:
--  IPC component :
+1. IPC component :
       zeroMQ
       protocol buffer
--  nodes interaction
+2. nodes interaction
 
 ## P2:
--  Ranking component :
-      Host Information component
-      Algorithm of ranking
+1. Ranking component :
+     * Host Information component
+     * Algorithm of ranking
 
 ##P3:
--  https://code.google.com/p/google-glog/ integration
--  https://code.google.com/p/gflags/ integration
+1. https://code.google.com/p/google-glog/ integration
+2. https://code.google.com/p/gflags/ integration
 
