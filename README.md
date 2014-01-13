@@ -51,8 +51,9 @@ ninja
 ## P0:
 1. [x] cmake files
 2. Dynamic Load Library Module : dynamic library loading mechenism
-3. Hopscotch hashing library (for nodes lookup)
+3. Hopscotch hashing library implement (for nodes lookup)
 4. thread library
+5. refract code
 
 ## P1:
 1. IPC component :
