@@ -39,7 +39,7 @@ cmake -G Ninja /path/to/the/vsD/source
 
 -  vsD uses Ninja for building process, make sure your Ninja has been installed.
 
-execute ninja under /tmp/build
+   execute ninja under /tmp/build
 ```bash
 ninja
 ```
