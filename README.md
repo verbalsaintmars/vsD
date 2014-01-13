@@ -23,19 +23,23 @@ to do it's jobs.
 
 # Build
 -  Create a directory for build result.
+   
    e.g:
 ```bash
 mkdir /tmp/build
 ```
 
 -  go into the directory and cmake the src out of it
+   
    e.g:
 ```bash
 cd /tmp/build
 cmake -G Ninja /path/to/the/vsD/source
 ```
 
--  vsD uses Ninja for building process, make sure your Ninja has been installed
+-  vsD uses Ninja for building process, make sure your Ninja has been installed.
+
+execute ninja under /tmp/build
 ```bash
 ninja
 ```
@@ -46,7 +50,7 @@ ninja
 # TODO List
 
 ## P0:
--  [X]cmake files
+- [x] cmake files
 -  Dynamic Load Library Module : dynamic library loading mechenism
 -  Hopscotch hashing library (for nodes lookup)
 -  thread library
