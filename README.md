@@ -24,7 +24,7 @@ to do it's jobs.
 # TODO List
 
 ## P0:
-- cmake files
+- ~~cmake files~~
 - Dynamic Load Library Module : dynamic library loading mechenism
 - Hopscotch hashing library (for nodes lookup)
 - thread library
