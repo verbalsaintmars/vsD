@@ -22,32 +22,29 @@ to do it's jobs.
 * glog
 
 # Build
-1. Create a directory for build result.
-   
+1. Create a directory for build result.  
    e.g:
 ```bash
 mkdir /tmp/build
 ```
 
-2. go into the directory and cmake the src out of it
-   
+2. go into the directory and cmake the src out of it  
    e.g:
 ```bash
 cd /tmp/build
 cmake -G Ninja /path/to/the/vsD/source
 ```
 
-3. vsD uses Ninja for building process, make sure your Ninja has been installed.
-
-   execute ninja under /tmp/build
+3. vsD uses Ninja for building process, make sure your Ninja has been installed.  
+   execute ninja under **/tmp/build**
 ```bash
 ninja
 ```
 
-4. the main vsD binary executble is under
-   **/tmp/build/bin**
-   the test binary executables is under
-   **/tmp/build/test_bin**
+4. the main vsD binary executble is under  
+   **/tmp/build/bin**  
+   the test binary executables is under  
+   **/tmp/build/test_bin**  
 
 # TODO List
 
