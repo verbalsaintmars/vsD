@@ -14,7 +14,7 @@ macro(ChkCompilerVer)
 
    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
        # require at least clang 3.2
-      if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.3)
+      if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
          set(COMPILER_VERSION_CHK 1)
       endif()
 
