@@ -3,6 +3,8 @@
 #include "daemon_include.hpp"
 #include "typehelper.hpp"
 
+// TODO first fork OK, but second fork failed and throw? init will collect it!
+
 namespace vsd { namespace daemon {
 
 enum class DAEMON_FLAG : int
@@ -15,6 +17,7 @@ enum class DAEMON_FLAG : int
    MAX_CLOSE = 0x2000
 };
 
+using namespace vsd::type_helper;
 
 class Daemon final
 {
@@ -33,89 +36,7 @@ public:
 
       ++forkCnt_;
 
-      /*
-       * It's in different process here...
-       */
-      if (forkId_ == 0)
-      {
-         if (forkCnt_ == 2)
-         {
-
-            if (!(vsd::type_helper::underlying(dflag) &
-                     vsd::type_helper::underlying(DAEMON_FLAG::NO_UMASK)))
-            {
-               ::umask(0);
-            }
-
-            if (!(vsd::type_helper::underlying(dflag) &
-                     vsd::type_helper::underlying(DAEMON_FLAG::NO_CHDIR)))
-            {
-               ::chdir("/");
-            }
-
-            if (!(vsd::type_helper::underlying(dflag) &
-                     vsd::type_helper::underlying(DAEMON_FLAG::NO_CLOSE_FILES)))
-            {
-
-               if ((maxfd_ = ::sysconf(_SC_OPEN_MAX)) == -1)
-               {
-                  maxfd_ = vsd::type_helper::underlying(DAEMON_FLAG::MAX_CLOSE);
-               }
-
-               int fd = 0;
-
-               for (; fd < maxfd_; ++fd)
-               {
-                  //if (fd == 1) continue; // debugging purpose
-                  ::close(fd);
-               }
-            }
-
-            if (!(vsd::type_helper::underlying(dflag) &
-                     vsd::type_helper::underlying(DAEMON_FLAG::NO_REOPEN_STD_FDS)))
-            {
-               ::close(STDIN_FILENO);
-
-               int fd = open("/dev/null", O_RDWR);
-
-               if (fd != STDIN_FILENO)
-                  throw std::system_error(
-                        std::error_code(
-                           errno,
-                           std::system_category()),
-                        std::string(
-                           "[system_error] Open /dev/null to STDIN_FILENO error.")
-                        );
-
-               if (::dup2(STDIN_FILENO, STDOUT_FILENO) != STDOUT_FILENO)
-                  throw std::system_error(
-                        std::error_code(
-                           errno,
-                           std::system_category()),
-                        std::string(
-                           "[system_error] dup2 STDIN_FILENO => STDOUT_FILENO error.")
-                        );
-
-               if (::dup2(STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO)
-                  throw std::system_error(
-                        std::error_code(
-                           errno,
-                           std::system_category()),
-                        std::string(
-                           "[system_error] dup2 STDIN_FILENO => STDERR_FILENO error.")
-                        );
-            }
-         }
-         else
-         {
-            ::setsid();
-            Daemon{dflag};
-         }
-      }
-      else
-      {
-         _exit(0);
-      }
+      fork(dflag);
    }
 
 
@@ -140,11 +61,132 @@ public:
    }
 
 private:
+   void fork(DAEMON_FLAG dflag)
+   {
+      /*
+       * child process
+       */
+      if (forkId_ == 0)
+      {
+         /*
+          * second fork.
+          * First fork :
+          *     Not to be process leader. We need to make a new session
+          * Second fork :
+          *     Get rid of being the session leader.
+          *     Process can not reacquire a controlling terminal
+          */
+         if (forkCnt_ == FORKNUM)
+         {
+            /*
+             * clear umask
+             */
+            if (!(underlying(dflag) & underlying(DAEMON_FLAG::NO_UMASK)))
+            {
+               ::umask(0);
+            }
+
+            /*
+             * set process's current working directory to /
+             * to prevent system shutdown unmount directory other than root dir
+             */
+            if (!(underlying(dflag) & underlying(DAEMON_FLAG::NO_CHDIR)))
+            {
+               ::chdir("/");
+            }
+
+            /*
+             * close all process's fd
+             */
+            if (!(underlying(dflag) & underlying(DAEMON_FLAG::NO_CLOSE_FILES)))
+            {
+               closeFD();
+            }
+
+            /*
+             * redirect STDIN_FILENO STDOUT_FILENO STDERR_FILENO to /dev/null
+             */
+            if (!(underlying(dflag) & underlying(DAEMON_FLAG::NO_REOPEN_STD_FDS)))
+            {
+               redirectFD();
+            }
+         }
+         else
+         {
+            /*
+             * First fork child. Set to session leader.
+             */
+            ::setsid();
+            Daemon{dflag};
+         }
+      }
+      else
+      {
+         _exit(0);
+      }
+   }
+
+
+   void closeFD() noexcept(true)
+   {
+      if ((maxfd_ = ::sysconf(_SC_OPEN_MAX)) == -1)
+      {
+         maxfd_ = underlying(DAEMON_FLAG::MAX_CLOSE);
+      }
+
+      int fd = 0;
+
+      for (; fd < maxfd_; ++fd)
+      {
+         //if (fd == 1) continue; // debugging purpose
+         ::close(fd);
+      }
+   }
+
+
+   void redirectFD()
+   {
+      ::close(STDIN_FILENO);
+
+      int fd = open("/dev/null", O_RDWR);
+
+      if (fd != STDIN_FILENO)
+         throw std::system_error(
+               std::error_code(
+                  errno,
+                  std::system_category()),
+               std::string(
+                  "[system_error] Open /dev/null to STDIN_FILENO error.")
+               );
+
+      if (::dup2(STDIN_FILENO, STDOUT_FILENO) != STDOUT_FILENO)
+         throw std::system_error(
+               std::error_code(
+                  errno,
+                  std::system_category()),
+               std::string(
+                  "[system_error] dup2 STDIN_FILENO => STDOUT_FILENO error.")
+               );
+
+      if (::dup2(STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO)
+         throw std::system_error(
+               std::error_code(
+                  errno,
+                  std::system_category()),
+               std::string(
+                  "[system_error] dup2 STDIN_FILENO => STDERR_FILENO error.")
+               );
+   }
+
+private:
    static void * operator new(size_t) = delete;
    static void operator delete(void*) = delete;
+
 private:
    static std::atomic_int forkCnt_;
    static int maxfd_;
+   enum : int {FORKNUM = 2};
+
 private:
    pid_t forkId_;
 };
