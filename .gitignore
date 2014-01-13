@@ -1,6 +1,7 @@
 *.out
 *.gch
 *.swp
-.directory
 *.bak
+*.ninja
+.directory
 build/
