@@ -1,6 +1,9 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
+#include "daemon_include.hpp"
 #ifndef _DAEMON_HPP
 #define _DAEMON_HPP
-#include "daemon_include.hpp"
 #include "typehelper.hpp"
 
 // TODO first fork OK, but second fork failed and throw? init will collect it!
@@ -195,5 +198,4 @@ std::atomic_int Daemon::forkCnt_{0};
 int Daemon::maxfd_{};
 
 }} // vsd::daemon
-
 #endif // for #ifndef _DAEMON_HPP

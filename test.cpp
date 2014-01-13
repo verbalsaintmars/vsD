@@ -1,3 +1,6 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
 #include <iostream>
 
 using namespace std;

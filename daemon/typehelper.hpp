@@ -1,5 +1,9 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
 #ifndef _TYPEHELPER_HPP
 #define _TYPEHELPER_HPP
+
 #include "daemon_include.hpp"
 
 namespace vsd { namespace type_helper {

@@ -1,3 +1,7 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
+
 #ifndef _DISPOSITION_HPP
 #define _DISPOSITION_HPP
 #include "signal_include.hpp"
@@ -9,7 +13,7 @@ void child_term_handler_template(int sig)
 {
    /* perform cleanup */
    ::signal(sig, SIG_DFL);
-   raise(sig);
+   ::raise(sig);
 
 }
 

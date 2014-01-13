@@ -2,9 +2,8 @@
  * Copyleft 2014 Verbalsaint
  * ******************************/
 
-#ifndef _SIGNAL_INCLUDE_HPP
-#define _SIGNAL_INCLUDE_HPP
-
+#ifndef _DL_INCLUDE_HPP
+#define _DL_INCLUDE_HPP
 
 /*
  * C++
@@ -30,7 +29,7 @@
 /*
  * POSIX
  */
-#include <signal.h>
+#include <dlfcn.h>
 
 
-#endif // for #ifndef _SIGNAL_INCLUDE_HPP
+#endif // for #ifndef _DL_INCLUDE_HPP

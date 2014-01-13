@@ -1,3 +1,6 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
 #include "signal.hpp"
 #include "disposition.hpp"
 /*

@@ -1,3 +1,7 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
+
 #ifndef _TYPEHELPER_HPP
 #define _TYPEHELPER_HPP
 #include "signal_include.hpp"

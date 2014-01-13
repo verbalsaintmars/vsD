@@ -1,3 +1,7 @@
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
+
 #ifndef _GENERAL_HPP
 #define _GENERAL_HPP
 

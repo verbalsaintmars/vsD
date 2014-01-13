@@ -1,5 +1,9 @@
-#ifndef _INCLUDE_HPP
-#define _INCLUDE_HPP
+/* ******************************
+ * Copyleft 2014 Verbalsaint
+ * ******************************/
+
+#ifndef _DAEMON_INCLUDE_HPP
+#define _DAEMON_INCLUDE_HPP
 /*
  * C++
  */
@@ -20,4 +24,4 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#endif // for #ifndef _INCLUDE_HPP
+#endif // for #ifndef _DAEMON_INCLUDE_HPP
