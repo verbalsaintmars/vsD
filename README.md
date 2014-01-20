@@ -51,10 +51,11 @@ ninja
 ## P0:
 1. [x] cmake files
 2. Dynamic Load Library Module : dynamic library loading mechenism
-3. zeroMQ + http://kentonv.github.io/capnproto/
-4. Android NDK compile and run on Android device
-5. nodes interaction
-6. https://code.google.com/p/gflags/ integration
+3. DBUS for IPC
+4. zeroMQ + http://kentonv.github.io/capnproto/
+5. Android NDK compile and run on Android device
+6. nodes interaction
+7. https://code.google.com/p/gflags/ integration
 
 ## P1:
 1. (Delay)Hopscotch hashing library implement (for nodes lookup)
