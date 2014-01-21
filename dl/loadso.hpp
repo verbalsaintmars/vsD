@@ -1,68 +1,74 @@
 /* ******************************
  * Copyleft 2014 Verbalsaint
  * ******************************/
-#ifndef _DL_HPP
-#define _DL_HPP
-#include "dl_include.hpp"
-#include "dl_interface.hpp"
+
+#ifndef _LOADSO_HPP
+#define _LOADSO_HPP
+#include <dl_interface.hpp>
 #include <typehelper.hpp>
+
+#include "dl_include.hpp"
 
 
 namespace vsd { namespace dl {
 
+
 using namespace vsd::type_helper;
 
 
-template<typename Identifier_Type>
 class LoadSo
 {
 private:
    using Handler_Type = void *;
-   using ModuleMap_Type = std::unordered_map<Identifier_Type, Handler_Type>;
+   using Key = int; //chksum
+   using Content = Handler_Type;
 
 public:
    /**
     * id : [in] Key to register
     */
-   bool RegisterType(const Identifier_Type& id);
+   auto RegisterType(const int& id, std::string soname) ->bool;
 
    /**
     * id : [in] Key for grabbing the handler
     * Symbol : [in] Symbol to load from .so
     */
    template<typename RetFuncType, typename... Args>
-   DLObject * CreateObject(
-         const Identifier_Type&,
+   DLObject * GetModule(
+         const int&,
          Args...,
-         const char* = "GetCreatorFunc");
+         const char* = "GetModule");
 
-   bool UnregisterType(const Identifier_Type& id);
+   void DeleteModule(
+         const int&,
+         DLObject *,
+         const char* = "DeleteModule");
+
+   auto UnregisterType(const int& id) ->bool;
 
 private:
-   bool dlopen(const Identifier_Type&);
-   bool dlclose(void *);
+   auto dlopen(const int& id, const char*)->bool;
+   auto dlclose(void *)->bool;
 
 private:
-   // TODO use implemented hotchscotch later
-   ModuleMap_Type moduleMap_;
+   // TODO use implemented hopscotch later
+   std::unordered_map<Key, Content> moduleMap_;
 };
 
 
-template<typename Identifier_Type>
-bool LoadSo<Identifier_Type>::RegisterType(
-      const Identifier_Type& id)
+auto LoadSo::RegisterType(
+      const int& id,
+      std::string soname) ->bool
 {
-   return dlopen(id);
+   return dlopen(id, soname.c_str());
 }
 
 
-template<typename Identifier_Type>
 template<
    typename RetFuncType,
-   typename... Args
->
-DLObject * LoadSo<Identifier_Type>::CreateObject(
-      const Identifier_Type& id,
+   typename... Args>
+DLObject * LoadSo::GetModule(
+      const int& id,
       Args... args,
       const char* Symbol)
 {
@@ -85,16 +91,36 @@ DLObject * LoadSo<Identifier_Type>::CreateObject(
 
       *reinterpret_cast<void **>(&rft) = ::dlsym((*Result).second, Symbol);
 
-      auto CreatorFunc = (*rft)();
-
-      return CreatorFunc(args...);
+      return (*rft)()(args...);
    }
 }
 
 
-template<typename Identifier_Type>
-bool LoadSo<Identifier_Type>::UnregisterType(
-      const Identifier_Type& id)
+void LoadSo::DeleteModule(
+      const int& id,
+      DLObject * module,
+      const char* Symbol)
+{
+   auto Result = moduleMap_.find(id);
+
+   if (Result == moduleMap_.end())
+   {
+      return;
+   }
+   else
+   {
+
+      DeleteModuleFunc_Type rft;
+
+      *reinterpret_cast<void **>(&rft) = ::dlsym((*Result).second, Symbol);
+
+      (*rft)(module);
+   }
+}
+
+
+auto LoadSo::UnregisterType(
+      const int& id) -> bool
 {
    auto Result = moduleMap_.find(id);
 
@@ -130,20 +156,13 @@ bool LoadSo<Identifier_Type>::UnregisterType(
 }
 
 
-template<typename Identifier_Type>
-bool LoadSo<Identifier_Type>::dlopen(
-   const Identifier_Type& id)
+auto LoadSo::dlopen(
+   const int& id,
+   const char* soname) ->bool
 {
-   /*
-    * Chk for null return
-    * Chk IdentifierType can cast to const char*
-    */
-   static_assert(boost::is_convertible<Identifier_Type,const char*>::value,
-         "[static_assert] IdentifierType should able to cast to const char*");
+   Handler_Type ht = ::dlopen(soname, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND);
 
-   Handler_Type ht = ::dlopen(id, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND);
-
-   if ( ht == nullptr)
+   if (ht == nullptr)
    {
       // Debug
       std::cout << ::dlerror() << std::endl;
@@ -156,8 +175,7 @@ bool LoadSo<Identifier_Type>::dlopen(
 }
 
 
-template<typename Identifier_Type>
-bool LoadSo<Identifier_Type>::dlclose(void *handle)
+auto LoadSo::dlclose(void *handle) -> bool
 {
    int erret = ::dlclose(handle);
 
@@ -176,4 +194,4 @@ bool LoadSo<Identifier_Type>::dlclose(void *handle)
 
 }} // vsd::dl
 
-#endif // for #ifndef _DL_HPP
+#endif // for #ifndef _LOADSO_HPP

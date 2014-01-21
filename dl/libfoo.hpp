@@ -2,14 +2,14 @@
  * Copyleft 2014 Verbalsaint
  * ******************************/
 
-#ifndef _LIB_HPP
-#define _LIB_HPP
+#ifndef _LIBFOO_HPP
+#define _LIBFOO_HPP
 /*
  * TODO Generic dl loader
  *
  */
 
-#include "dl_interface.hpp"
+#include <dl_interface.hpp>
 #include <fstream>
 
 class Fun : public vsd::dl::DLObject
@@ -17,7 +17,7 @@ class Fun : public vsd::dl::DLObject
 public:
    void ForFun() override
    {
-      std::cout << "Fun's ForFun!" << std::endl;
+//      std::cout << "Fun's ForFun!" << std::endl;
    }
    ~Fun() = default;
 };
@@ -31,12 +31,19 @@ vsd::dl::DLObject * CreateObject()
    tmpfile.open("/tmp/haha.txt", std::ios::out | std::ios::app);
    tmpfile << "called number : " << i++ << "\n";
    tmpfile.close();
+
    return fun;
 }
 
 
-RetDLObjectFunc_Type GetCreatorFunc()
+RetDLObjectFunc_Type GetModule()
 {
    return &CreateObject;
 }
-#endif // for #ifndef _LIB_HPP
+
+void DeleteModule(vsd::dl::DLObject *module)
+{
+   delete module;
+}
+
+#endif // for #ifndef _LIBFOO_HPP
