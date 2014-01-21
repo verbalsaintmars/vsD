@@ -50,7 +50,7 @@ ninja
 
 ## P0:
 1. [x] cmake files
-2. Dynamic Load Library Module : dynamic library loading mechenism
+2. [x] Dynamic Load Library Module : dynamic library loading mechenism
 3. DBUS for IPC
 4. zeroMQ + http://kentonv.github.io/capnproto/
 5. Android NDK compile and run on Android device
