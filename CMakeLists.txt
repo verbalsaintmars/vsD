@@ -17,10 +17,11 @@ include("${PROJECT_CMAKE_FILES}/cpp11.cmake")
 include("${PROJECT_CMAKE_FILES}/create_dir.cmake")
 
 # sub dirs to build
-add_subdirectory(signal)
-add_subdirectory(daemon)
+add_subdirectory(dl)
+#add_subdirectory(signal)
+#add_subdirectory(daemon)
 
 # main program
-add_executable (vsD test.cpp)
-set_property(TARGET vsD
-   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
+#add_executable (vsD test.cpp)
+#set_property(TARGET vsD
+#   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")

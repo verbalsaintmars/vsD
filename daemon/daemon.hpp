@@ -1,10 +1,10 @@
 /* ******************************
  * Copyleft 2014 Verbalsaint
  * ******************************/
-#include "daemon_include.hpp"
 #ifndef _DAEMON_HPP
 #define _DAEMON_HPP
-#include "typehelper.hpp"
+#include <typehelper.hpp>
+#include "daemon_include.hpp"
 
 // TODO first fork OK, but second fork failed and throw? init will collect it!
 

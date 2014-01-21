@@ -4,8 +4,8 @@
 
 #ifndef _SIGNAL_HPP
 #define _SIGNAL_HPP
+#include <typehelper.hpp>
 #include "signal_include.hpp"
-#include "typehelper.hpp"
 
 /*
  * TODO: Arch design
