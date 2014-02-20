@@ -8,3 +8,4 @@
 *.ninja
 .directory
 build/
+**/CMakeFiles/
