@@ -50,7 +50,7 @@ using namespace boost::multi_index;
  * Include Library File Name, CheckSum, TODO Deployied vsD processes(include local and
  *    remote hosts
  */
-class CreateSoMap{
+class SoMap{
 private:
    using Key = std::string;
    using Content = int;
@@ -71,7 +71,7 @@ private:
 };
 
 
-auto CreateSoMap::Add(const std::string& soname) ->bool
+auto SoMap::Add(const std::string& soname) ->bool
 {
    // TODO remote this and make CheckSum to check soname in rpath
    auto chksum = CheckSum( (std::string("./modules/") + soname.c_str()).c_str() );
@@ -97,7 +97,7 @@ auto CreateSoMap::Add(const std::string& soname) ->bool
 /*
  * No need return type specified for c++1y
  */
-auto CreateSoMap::Get(const std::string& soname) -> int
+auto SoMap::Get(const std::string& soname) -> int
 {
    using SoMap_Index_Type = ContainerType::index<SONAME>::type;
 
@@ -113,7 +113,7 @@ auto CreateSoMap::Get(const std::string& soname) -> int
 }
 
 
-auto CreateSoMap::Get(const int& chksum) -> boost::optional<std::string>
+auto SoMap::Get(const int& chksum) -> boost::optional<std::string>
 {
    using SoMap_Index_Type = ContainerType::index<CHKSUM>::type;
 

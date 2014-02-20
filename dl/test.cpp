@@ -28,7 +28,7 @@ int main()
    /*
     * CreateSoMap will create a map of module checksum and module name
     */
-   vsd::dl::CreateSoMap somap;
+   vsd::dl::SoMap somap;
    if (somap.Add(soname) == false)
       return 1;
 

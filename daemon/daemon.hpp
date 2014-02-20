@@ -12,12 +12,12 @@ namespace vsd { namespace daemon {
 
 enum class DAEMON_FLAG : int
 {
-   NONE = 0x00,
-   NO_CHDIR = 0x01,
-   NO_CLOSE_FILES = 0x02,
-   NO_REOPEN_STD_FDS = 0x04,
-   NO_UMASK = 0x0A,
-   MAX_CLOSE = 0x2000
+   NONE = 0x000000,
+   NO_CHDIR = 0x00000001,
+   NO_CLOSE_FILES = 0x00000002,
+   NO_REOPEN_STD_FDS = 0x00000004,
+   NO_UMASK = 0x0000000A,
+   MAX_CLOSE = 0x00002000
 };
 
 using namespace vsd::type_helper;
@@ -25,7 +25,8 @@ using namespace vsd::type_helper;
 class Daemon final
 {
 public:
-   Daemon(DAEMON_FLAG dflag) : forkId_(::fork())
+   Daemon(DAEMON_FLAG dflag, std::string rootdir = "/") :
+      forkId_{::fork()} , rootdir_{rootdir}
    {
       if (forkId_ == -1)
       {
@@ -95,7 +96,7 @@ private:
              */
             if (!(underlying(dflag) & underlying(DAEMON_FLAG::NO_CHDIR)))
             {
-               ::chdir("/");
+               ::chdir(rootdir_.c_str());
             }
 
             /*
@@ -192,6 +193,7 @@ private:
 
 private:
    pid_t forkId_;
+   std::string rootdir_;
 };
 
 std::atomic_int Daemon::forkCnt_{0};

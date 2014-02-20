@@ -51,18 +51,21 @@ ninja
 ## P0:
 1. [x] cmake files
 2. [x] Dynamic Load Library Module : dynamic library loading mechenism
-3.
-   3. coredump/chkEnv
-   4. sigwait for child
-   5. Child's disposition, disestablish then raise again
-4.
+3. Integrate. Main.cpp
+4. DBUS for IPC **
+5.
+   1. coredump/chkEnv
+   2. sigwait for child
+   3. Child's disposition, disestablish then raise again
+
+6.
    privilege :
    1. raise/decrease privilege in setuid mode
-3. DBUS for IPC
-4. zeroMQ + http://kentonv.github.io/capnproto/
-5. Android NDK compile and run on Android device
-6. nodes interaction
-7. https://code.google.com/p/gflags/ integration
+
+7. zeroMQ + http://kentonv.github.io/capnproto/
+8. Android NDK compile and run on Android device
+9. nodes interaction
+10. https://code.google.com/p/gflags/ integration
 
 ## P1:
 1. (Delay)Hopscotch hashing library implement (for nodes lookup)

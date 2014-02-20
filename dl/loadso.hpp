@@ -20,7 +20,7 @@ class LoadSo final
 {
 private:
    using Handler_Type = void *;
-   using Key = int; //chksum
+   using Key = int; //chksum of .so binary file
    using Content = Handler_Type;
 
 public:
@@ -164,7 +164,7 @@ auto LoadSo::dlopen(
 
    if (ht == nullptr)
    {
-      // Debug
+      // TODO[LOG]
       std::cout << ::dlerror() << std::endl;
       return false;
    }

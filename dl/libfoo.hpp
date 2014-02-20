@@ -23,7 +23,8 @@ public:
 };
 
 
-vsd::dl::DLObject * CreateObject()
+//Can have arguments
+vsd::dl::DLObject *CreateObject()
 {
    static int i = 0;
    static Fun * fun = new Fun;
@@ -35,11 +36,12 @@ vsd::dl::DLObject * CreateObject()
    return fun;
 }
 
-
+//Interface
 RetDLObjectFunc_Type GetModule()
 {
    return &CreateObject;
 }
+
 
 void DeleteModule(vsd::dl::DLObject *module)
 {
