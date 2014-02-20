@@ -7,5 +7,4 @@
 *.bak
 *.ninja
 .directory
-build/*
-cmakefiles/CMakeFiles/*
+build/
