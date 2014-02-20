@@ -14,7 +14,11 @@
 #include <map>
 #include <utility>
 
+#include <cassert>
 #include <cerrno>
+#include <csignal>
+#include <cstdlib>
+
 #include <system_error>
 
 
@@ -30,7 +34,8 @@
 /*
  * POSIX
  */
-#include <signal.h>
+//#include <signal.h>
+#include <sys/resource.h>
 
 
 #endif // for #ifndef _SIGNAL_INCLUDE_HPP

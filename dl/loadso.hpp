@@ -16,7 +16,7 @@ namespace vsd { namespace dl {
 using namespace vsd::type_helper;
 
 
-class LoadSo
+class LoadSo final
 {
 private:
    using Handler_Type = void *;

@@ -6,10 +6,11 @@
 #define _SIGNAL_HPP
 #include <typehelper.hpp>
 #include "signal_include.hpp"
+#include "signal_type.hpp"
 
 /*
  * TODO: Arch design
- * TODO: disposition write
+ * TODO: disposition to write
  *
  * SIGABRT / SIGIOT(linux)
  * SIGCHLD
@@ -38,13 +39,6 @@
  *
  */
 
-namespace vsd { namespace signal { namespace type{
-
-using sigHandle_t = void(*)(int);
-
-}}} // vsd::signal::type
-
-
 namespace vsd { namespace signal {
 
 template<typename HT>
@@ -53,15 +47,24 @@ class SetSigHandler final
 public:
    SetSigHandler() = default;
 
+   /* flags:
+    *  SA_NOCLDSTOP
+    *  SA_NOCLDWAIT
+    *  SA_NODEFER
+    *  SA_ONSTACK
+    *  SA_RESETHAND
+    *  SA_RESTART
+    *  SA_SIGINFO
+    */
    struct sigaction operator()(int sig, HT handler, sigset_t mask, int flags)&&
    {
       struct sigaction sa;
-      struct sigaction saold;
+      struct sigaction sa_orig;
       sa.sa_handler = handler;
       sa.sa_mask = mask;
       sa.sa_flags = flags;
 
-      if (sigaction(sig, &sa, &saold) == -1)
+      if (sigaction(sig, &sa, &sa_orig) == -1)
       {
          throw std::system_error(
                std::error_code(
@@ -71,23 +74,19 @@ public:
                );
       }
 
-      return saold;
+      return sa_orig;
    }
-   /*
-    * SA_NOCLDSTOP
-    * SA_NOCLDWAIT
-    * SA_NODEFER
-    * SA_ONSTACK
-    * SA_RESETHAND
-    * SA_RESTART
-    * SA_SIGINFO
-    */
+
 private:
    static void* operator new(std::size_t) = delete;
    static void operator delete(void*) = delete;
 };
 
 
+/*
+ * Use for setting up signal's disposition
+ *
+ */
 template<typename DISPOSITION>
 boost::optional<struct sigaction> setSigHandler(
       int sig, DISPOSITION dis, sigset_t mask, int flags)

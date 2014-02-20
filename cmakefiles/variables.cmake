@@ -15,7 +15,7 @@ SET(PROJECT_CMAKE_FILES "${PROJECT_SOURCE_DIR}/cmakefiles")
 # Possible values are empty, Debug, Release, RelWithDebInfo and MinSizeRel.
 # http://stackoverflow.com/questions/7724569/debug-vs-release-in-cmake
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O3")
 
 # For Build Directory
 SET(BIN_DIR "${PROJECT_BINARY_DIR}/bin")
@@ -23,7 +23,6 @@ SET(TEST_BIN_DIR "${PROJECT_BINARY_DIR}/test_bin")
 
 # For Dynamic modules
 SET(MODULES_PATH "modules")
-
 
 # RPATH
 SET(CMAKE_SKIP_BUILD_RPATH  FALSE)

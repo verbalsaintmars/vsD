@@ -20,6 +20,17 @@
 
 #undef htons
 
+
+//defines
+#define VSDASSERT(cond, msg) \
+   do{   \
+   } while(0)
+
+
+#define UNUSED(x) ((void)x)
+
+
+
 namespace vsd { namespace dl { namespace utility {
 
 /*

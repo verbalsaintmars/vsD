@@ -24,6 +24,6 @@ add_library(foo SHARED libfoo.cpp)
 set_property(TARGET foo
    PROPERTY LIBRARY_OUTPUT_DIRECTORY "${TEST_BIN_DIR}/${MODULES_PATH}")
 
-target_include_directories(foo PRIVATE PRIVATE "${CMAKE_SOURCE_DIR}/include"
+target_include_directories(foo PRIVATE "${CMAKE_SOURCE_DIR}/include" PUBLIC
    "${CMAKE_SOURCE_DIR}/public")
 
