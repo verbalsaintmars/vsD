@@ -6,13 +6,27 @@
 #include <typehelper.hpp>
 #include "daemon_include.hpp"
 
-// TODO first fork OK, but second fork failed and throw? init will collect it!
+template<>
+void generalSignalHandler<SIGUSR1>(int sig)
+{
+   SAVEERRNO
+
+   assert(sig == SIGUSR1);
+
+   UNUSED(sig);
+
+   // 
+
+
+   GETERRNO
+}
+
 
 namespace vsd { namespace daemon {
 
 enum class DAEMON_FLAG : int
 {
-   NONE = 0x000000,
+   NONE = 0x00000000,
    NO_CHDIR = 0x00000001,
    NO_CLOSE_FILES = 0x00000002,
    NO_REOPEN_STD_FDS = 0x00000004,
@@ -63,6 +77,8 @@ public:
    {
       return getsid(getPid());
    }
+
+   void run();
 
 private:
    void fork(DAEMON_FLAG dflag)
@@ -183,6 +199,9 @@ private:
    }
 
 private:
+   inline void prepareSignal();
+
+private:
    static void * operator new(size_t) = delete;
    static void operator delete(void*) = delete;
 
@@ -196,8 +215,37 @@ private:
    std::string rootdir_;
 };
 
+
 std::atomic_int Daemon::forkCnt_{0};
 int Daemon::maxfd_{};
+
+
+void Daemon::prepareSignal()
+{
+   using namespace vsd::signal;
+   // ignore child signal. Use dbus to communicate to child process
+   ::signal(SIGCHLD, SIG_IGN);
+
+   if(setSigHandler(
+         SIGUSR1,
+         &generalSignalHandler<SIGUSR1>,
+         Sigset(SIGACTION::EMPTY),
+         0))
+   {
+      //TODO[LOG]
+   }
+
+}
+
+void Daemon::run()
+{
+   prepareSignal();
+   while(true)
+   {
+      pause();
+   }
+}
+
 
 }} // vsd::daemon
 #endif // for #ifndef _DAEMON_HPP

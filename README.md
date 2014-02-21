@@ -53,6 +53,9 @@ ninja
 2. [x] Dynamic Load Library Module : dynamic library loading mechenism
 3. Integrate. Main.cpp
 4. DBUS for IPC **
+   1. vsD register to session bus. If ok, fork with new process with dbus info passed in.
+   2. with universal Container to monitor child process from dbus/0mq
+   3. iff an executable, take advantage of dbus activation mechanism
 5.
    1. coredump/chkEnv
    2. sigwait for child

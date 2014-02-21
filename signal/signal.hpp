@@ -39,7 +39,47 @@
  *
  */
 
+template<int SIGNAL>
+void generalSignalHandler(int sig);
+
+/*
+ * Used for coredump
+ */
+template<>
+void generalSignalHandler<SIGABRT>(int sig)
+{
+   SAVEERRNO
+
+   assert(sig == SIGABRT);
+
+   UNUSED(sig);
+
+   /*
+    * TODO :
+    * 1. Check capability
+    * 2. Check resource
+    * 3. TODO[LOG]
+    */
+   std::abort();
+
+   GETERRNO
+}
+
+
+/*
+ * Alias type for pointer to specific function type
+ */
+template<int SIGNAL>
+using DISPOSITION = decltype(generalSignalHandler<SIGNAL>)*;
 namespace vsd { namespace signal {
+
+
+enum class SIGACTION : int
+{
+   FILL,
+   EMPTY
+};
+
 
 template<typename HT>
 class SetSigHandler final
@@ -83,13 +123,40 @@ private:
 };
 
 
+struct Sigset
+{
+   explicit Sigset(sigset_t sigset) : sigset_(sigset)
+   {
+   }
+
+   Sigset(SIGACTION action)
+   {
+      switch(action)
+      {
+         case SIGACTION::EMPTY:
+            ::sigemptyset(&sigset_);
+
+         case SIGACTION::FILL:
+            ::sigfillset(&sigset_);
+      }
+   }
+
+   operator sigset_t()
+   {
+      return sigset_;
+   }
+private:
+   sigset_t sigset_;
+};
+
+
 /*
  * Use for setting up signal's disposition
  *
  */
 template<typename DISPOSITION>
 boost::optional<struct sigaction> setSigHandler(
-      int sig, DISPOSITION dis, sigset_t mask, int flags)
+      int sig, DISPOSITION dis, sigset_t mask, int flags = 0)
 {
    using namespace vsd::type_helper;
 
@@ -116,6 +183,7 @@ boost::optional<struct sigaction> setSigHandler(
    }
 
 }
+
 
 }} // vsd::signal
 

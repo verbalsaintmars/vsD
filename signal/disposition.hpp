@@ -5,39 +5,8 @@
 #ifndef _DISPOSITION_HPP
 #define _DISPOSITION_HPP
 #include "signal_include.hpp"
-#include <utility.hpp>
 
 namespace vsd { namespace signal { namespace disposition {
-
-
-template<int SIGNAL>
-void generalSignalHandler(int sig);
-
-/*
- * Used for coredump
- */
-template<>
-void generalSignalHandler<SIGABRT>(int sig)
-{
-   assert(sig == SIGABRT);
-
-   UNUSED(sig);
-
-   /*
-    * TODO :
-    * 1. Check capability
-    * 2. Check resource
-    * 3. TODO[LOG]
-    */
-   std::abort();
-}
-
-/*
- * Alias type for pointer to specific function type
- */
-template<int SIGNAL>
-using DISPOSITION = decltype(generalSignalHandler<SIGNAL>)*;
-
 
 /*
  * Used in child process
@@ -45,8 +14,12 @@ using DISPOSITION = decltype(generalSignalHandler<SIGNAL>)*;
  */
 void child_term_handler(int sig)
 {
+   SAVEERRNO
+
    ::signal(sig, SIG_DFL);
    ::raise(sig);
+
+   GETERRNO
 }
 
 
@@ -56,19 +29,27 @@ void child_term_handler(int sig)
  */
 void SIGHUP_daemon_handler(int sig)
 {
+   SAVEERRNO
+
    /* re-read config or else for daemon process */
    assert(sig == SIGHUP);
 
    UNUSED(sig);
+
+   GETERRNO
 }
 
 
 void SIGINT_test_handler(int sig)
 {
+   SAVEERRNO
+
    assert(sig == SIGINT);
    /* test installed handler for [c-c] */
    using namespace std;
    cout << "in SIGINT handler : " << sig << endl;
+
+   GETERRNO
 }
 
 }}} // vsd::signal::disposition

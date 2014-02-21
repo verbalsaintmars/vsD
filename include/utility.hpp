@@ -29,7 +29,21 @@
 
 #define UNUSED(x) ((void)x)
 
+// http://stackoverflow.com/a/3418029
+// #ifdef UNUSED
+// #elif defined(__GNUC__)
+// # define UNUSED(x) UNUSED_ ## x __attribute__((unused))
+// #elif defined(__LCLINT__)
+// # define UNUSED(x) /*@unused@*/ x
+// #else
+// # define UNUSED(x) x
+// #endif
 
+#define SAVEERRNO \
+   int __orig_errno = errno;
+
+#define GETERRNO \
+   errno = __orig_errno;
 
 namespace vsd { namespace dl { namespace utility {
 

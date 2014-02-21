@@ -4,6 +4,9 @@
 
 #ifndef _DAEMON_INCLUDE_HPP
 #define _DAEMON_INCLUDE_HPP
+
+#include <signal.hpp>
+
 /*
  * C++
  */
@@ -14,6 +17,7 @@
 #include <type_traits>
 
 #include <cerrno>
+#include <csignal>
 #include <system_error>
 
 

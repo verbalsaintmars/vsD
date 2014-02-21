@@ -15,7 +15,7 @@ int main()
    }
    catch(system_error& se)
    {
-      //TODO : Write Err Log
+      //TODO[LOG] error log
       //TODO : Do other tasks, report to mothership
       std::cout << se.what() << std::endl;
    }
