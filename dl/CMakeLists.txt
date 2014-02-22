@@ -13,7 +13,7 @@ target_link_libraries(vsD_dl "-ldl")
 set_target_properties(vsD_dl PROPERTIES LINK_FLAGS
    "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN'/${MODULES_PATH}")
 
-target_include_directories(vsD_dl PRIVATE PRIVATE "${CMAKE_SOURCE_DIR}/include"
+target_include_directories(vsD_dl PRIVATE "${CMAKE_SOURCE_DIR}/include" PRIVATE
    "${CMAKE_SOURCE_DIR}/public")
 
 
