@@ -9,6 +9,6 @@ set_property(TARGET vsD_child
    PROPERTY RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIR}")
 
 
-target_include_directories(vsD_child PRIVATE "${CMAKE_SOURCE_DIR}/include" PRIVATE
-   "${CMAKE_SOURCE_DIR}/public")
+target_include_directories(vsD_child PRIVATE "${CMAKE_SOURCE_DIR}/include")
 
+target_link_libraries(vsD_child "-lgflags")

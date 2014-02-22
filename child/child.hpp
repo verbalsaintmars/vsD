@@ -9,7 +9,6 @@
 
 /*
  * TODO
- * 1. child.out
  * 2. daemon
  * 3. setup signal
  * 4. prepare dbus , being a callee
