@@ -34,7 +34,7 @@ void SIGHUP_daemon_handler(int sig)
    /* re-read config or else for daemon process */
    assert(sig == SIGHUP);
 
-   UNUSED(sig);
+ //  UNUSED(sig);
 
    GETERRNO
 }
