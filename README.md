@@ -56,6 +56,9 @@ ninja
    1. vsD register to session bus. If ok, fork with new process with dbus info passed in.
    2. with universal Container to monitor child process from dbus/0mq
    3. iff an executable, take advantage of dbus activation mechanism
+   4. remote site with 0mq taking income
+5.
+   1. 0mq deploy
 5.
    1. coredump/chkEnv
    2. sigwait for child
