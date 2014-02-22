@@ -6,15 +6,13 @@
 #define _UTILITY_HPP
 
 //#include <cstdint>
-#include <fstream>
 #include <ios>
 #include <iterator>
 #include <vector>
 
-#include <boost/crc.hpp>
-
-#include <dlfcn.h>
-
+/*
+ * POSIX
+ */
 #include <arpa/inet.h>
 //#include <netinet/in.h>
 
@@ -45,38 +43,7 @@
 #define GETERRNO \
    errno = __orig_errno;
 
-namespace vsd { namespace dl { namespace utility {
-
-/*
- * Not utf enabled
- * Dynamic check rpath for soname
- * http://stackoverflow.com/questions/2836330/is-there-a-way-to-inspect-the-current-rpath-on-linux
- */
-static int CheckSum(const char* soname)
-{
-   auto handle = ::dlopen(soname, RTLD_LAZY | RTLD_LOCAL);
-   if (handle == nullptr)
-   {
-      // not a proper so file
-      return -1;
-   }
-   ::dlclose(handle);
-
-   std::ifstream file(soname, std::ios_base::binary);
-
-   if (file.fail())
-   {
-      return -1;
-   }
-
-   std::istream_iterator<unsigned char> begin(file), end;
-
-   std::vector<unsigned char> content{begin, end};
-
-   boost::crc_32_type result;
-   result.process_bytes(content.data(), content.size());
-   return result.checksum();
-}
+namespace vsd{ namespace utility{ namespace network{
 
 
 static uint16_t GetPort(uint16_t port)
@@ -108,5 +75,5 @@ static void GetIpv6Str(const void * addrptr, char *strptr)
    ::inet_ntop(AF_INET6, addrptr, strptr, INET_ADDRSTRLEN);
 }
 
-}}} // vsd::dl::utility
+}}} // vsd::utility::network
 #endif // for #ifndef _UTILITY_HPP
