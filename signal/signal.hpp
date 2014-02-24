@@ -71,6 +71,8 @@ void generalSignalHandler<SIGABRT>(int sig)
  */
 template<int SIGNAL>
 using DISPOSITION = decltype(generalSignalHandler<SIGNAL>)*;
+
+
 namespace vsd { namespace signal {
 
 

@@ -15,9 +15,6 @@ void generalSignalHandler<SIGUSR1>(int sig)
 
    UNUSED(sig);
 
-   // 
-
-
    GETERRNO
 }
 

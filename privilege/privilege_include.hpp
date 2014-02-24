@@ -10,6 +10,7 @@
  */
 #include <cerrno>
 #include <cassert>
+#include <system_error>
 
 
 /*
@@ -22,6 +23,7 @@
  */
 #include <unistd.h>
 #include <sys/resource.h>
+#include <sys/stat.h>
 
 
 #endif // for #ifndef _PRIVILEGE_INCLUDE_HPP

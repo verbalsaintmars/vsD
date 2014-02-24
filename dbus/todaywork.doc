@@ -1,0 +1,16 @@
+1. dbus : loadso and child
+
+2. child's fork, loadso load the so, child setup dbus, loadso setup dbus, talk to each
+other.
+
+3. merge into project
+
+
+------
+child:
+dbus:
+setup loadso's busname
+1. sessionid
+2. soname
+3. soname hash
+4. so version

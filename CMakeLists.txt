@@ -15,9 +15,11 @@ project (vsD CXX)
 include("${PROJECT_SOURCE_DIR}/cmakefiles/variables.cmake")
 include("${PROJECT_CMAKE_FILES}/cpp11.cmake")
 include("${PROJECT_CMAKE_FILES}/create_dir.cmake")
+include("${PROJECT_CMAKE_FILES}/includedir.cmake")
 
 # sub dirs to build
-add_subdirectory(child)
+add_subdirectory(dbus)
+#add_subdirectory(child)
 # add_subdirectory(dl)
 # add_subdirectory(signal)
 # add_subdirectory(daemon)

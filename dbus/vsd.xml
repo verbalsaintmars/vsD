@@ -1,0 +1,7 @@
+<node name="/vsd/dbus/vsd">
+  <interface name="vsd.dbus.so.loadsoul">
+    <method name="Random">
+       <arg type="a{h}" name="version" direction="out"/>
+    </method>
+  </interface>
+</node>

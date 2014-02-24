@@ -1,5 +1,4 @@
-<?xml version="1.0" ?>
-<node name="/vsd/dbus/loadsoul">
+<node name="/vsd/dbus/child">
   <interface name="vsd.dbus.so.loadsoul">
     <method name="Random">
        <arg type="a{h}" name="version" direction="out"/>
